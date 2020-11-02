@@ -11,16 +11,19 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <div className="row">
-          <div className="offset-3 col-6">
-            <Filter />
-
-            <hr/>
-
-            <Statistics />
-
-            <hr/>
-
+          <div className="col-6">
             <ContentList />
+          </div>
+          <div className="col-6">
+            <div className="row">
+              <div className="col-12">
+                <Filter />
+              <hr/>
+              </div>
+              <div className="col-12">
+                <Statistics />
+              </div>
+            </div>
           </div>
         </div>
       </Provider>

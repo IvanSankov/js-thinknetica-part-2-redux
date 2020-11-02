@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 
-import contentListReducer from "./content-list";
+import sections from "../slices/sections";
 import filter from "../slices/filter";
 
 export default combineReducers({
-  sections: contentListReducer,
+  sections,
   filter
 });

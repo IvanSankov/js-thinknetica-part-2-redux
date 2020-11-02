@@ -1,4 +1,4 @@
-import {ADD_NEW_SECTION} from "../../redux/reducers/content-list/actions";
+import { addNewSection } from "../../redux/slices/sections";
 import {connect} from "react-redux";
 import ContentList from "./ContentList";
 import {cloneDeep} from "lodash";
@@ -38,12 +38,9 @@ function mapStateToProps(state) {
 
 function mapDispatch2Props(dispatch) {
   return {
-    addNewSection: function (title) {
-      return dispatch({
-        type: ADD_NEW_SECTION,
-        title
-      });
-    }
+    addNewSection: (title) => dispatch(addNewSection({
+      title
+    }))
   };
 }
 

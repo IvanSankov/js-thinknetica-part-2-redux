@@ -1,16 +1,13 @@
-import {MARK_SUBSECTION_AS_COMPLETE} from "../../redux/reducers/content-list/actions";
+import {markSubsectionAsComplete} from "../../redux/slices/sections";
 import {connect} from "react-redux";
 import Subsection from "./Subsection";
 
 function mapDispatchToProp(dispatch) {
   return {
-    markAsComplete: function (sectionId, subsectionId) {
-      return dispatch({
-        type: MARK_SUBSECTION_AS_COMPLETE,
-        sectionId,
-        subsectionId
-      });
-    }
+    markAsComplete: (sectionId, subsectionId) => dispatch(markSubsectionAsComplete({
+      sectionId,
+      subsectionId
+    }))
   }
 }
 

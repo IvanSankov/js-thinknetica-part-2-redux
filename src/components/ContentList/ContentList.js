@@ -2,6 +2,7 @@ import React, {useCallback} from "react";
 import { isEmpty } from 'lodash';
 
 import Section from "../Section";
+import UndoRedo from "../UndoRedo";
 
 function ContentList({ error, isLoading, sections, addNewSection }) {
   return (
@@ -34,6 +35,7 @@ function Success({ sections, addNewSection }) {
       { Object.entries(sections).map(data => <Section key={data[0]} section={data[1]} />) }
       <hr/>
       <AddSection addNewSection={addNewSection} />
+      <UndoRedo />
     </>
   );
 }

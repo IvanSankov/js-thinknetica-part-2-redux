@@ -18,7 +18,7 @@ const filters = {
 
 function mapStateToProps(state) {
   const sections = {};
-  for (const [id, section] of Object.entries(state.sections.entries)) {
+  for (const [id, section] of Object.entries(state.sections.present.entries)) {
     const newSection = cloneDeep(section);
     newSection.subsections = {};
 
@@ -32,8 +32,8 @@ function mapStateToProps(state) {
   }
 
   return {
-    isLoading: state.sections.isLoading,
-    error: state.sections.error,
+    isLoading: state.sections.present.isLoading,
+    error: state.sections.present.error,
     sections
   }
 }

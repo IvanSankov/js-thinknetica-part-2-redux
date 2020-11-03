@@ -1,35 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAction } from "@reduxjs/toolkit";
+import { requestSectionInfo, successResponseSectionInfo, errorResponseSectionInfo } from "../actions/sections";
 
 const initialState = {
-  "1qazwsx": {
-    id: "1qazwsx",
-    title: "First section",
-    completed: false,
-    subsections: {
-      "1poilkj": {
-        id: "1poilkj",
-        title: "Subsection 1.1",
-        completed: false,
-      },
-      "2njtrfg": {
-        id: "2njtrfg",
-        title: "Subsection 1.2",
-        completed: true,
-      }
-    }
-  },
-  "2dckgest": {
-    id: "2dckgest",
-    title: "Second section",
-    completed: false,
-    subsections: {
-      "1bdjest": {
-        id: "1bdjest",
-        title: "Subsection 2.1",
-        completed: false,
-      },
-    }
-  },
+  isLoading: false,
+  error: null,
+  entries: {}
 };
 
 function isAllSubsectionCompleted(subsection) {
@@ -46,7 +21,7 @@ const sectionsSlice = createSlice({
   reducers: {
     addNewSubSection(state, action) {
       const uuid = generateUuid();
-      const section = state[action.payload.sectionId];
+      const section = state.entries[action.payload.sectionId];
 
       section.subsections[uuid] = {
         id: uuid,
@@ -59,7 +34,7 @@ const sectionsSlice = createSlice({
     addNewSection(state, action) {
       const uuid = generateUuid();
 
-      state[uuid] = {
+      state.entries[uuid] = {
         id: uuid,
         title: action.payload.title,
         completed: false,
@@ -67,7 +42,7 @@ const sectionsSlice = createSlice({
       };
     },
     markSubsectionAsComplete(state, action) {
-      const section = state[action.payload.sectionId];
+      const section = state.entries[action.payload.sectionId];
 
       section.subsections[action.payload.subsectionId].completed = true;
 
@@ -75,6 +50,24 @@ const sectionsSlice = createSlice({
         section.completed = true;
       }
     }
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(requestSectionInfo, (state, action) => {
+        state.isLoading = true;
+        state.error = null;
+        state.entries = {};
+      })
+      .addCase(successResponseSectionInfo, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.entries = action.payload;
+      })
+      .addCase(errorResponseSectionInfo, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        state.entries = {};
+      })
   }
 });
 

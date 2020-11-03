@@ -1,17 +1,40 @@
 import React, {useCallback} from "react";
+import { isEmpty } from 'lodash';
 
 import Section from "../Section";
 
-function ContentList({ sections, addNewSection }) {
+function ContentList({ error, isLoading, sections, addNewSection }) {
   return (
     <div className="row">
       <div className="col-12">
-        <h3 className="text-center">Table of contents of the book</h3>
-        { Object.entries(sections).map(data => <Section key={data[0]} section={data[1]} />) }
-        <hr/>
-        <AddSection addNewSection={addNewSection} />
+        { isLoading && <LoadingMessage /> }
+        { !isLoading && error && <ErrorMessage message={error} /> }
+        { !isLoading && !error && !isEmpty(sections) && <Success sections={sections} addNewSection={addNewSection} /> }
       </div>
     </div>
+  );
+}
+
+function LoadingMessage(props) {
+  return <p>Получение данных...</p>
+}
+
+function ErrorMessage({ message }) {
+  return <p>{ message }</p>
+}
+
+function NoData() {
+  return <p>Извините, но по вашему запросу, данных не обнаружено</p>
+}
+
+function Success({ sections, addNewSection }) {
+  return (
+    <>
+      <h3 className="text-center">Table of contents of the book</h3>
+      { Object.entries(sections).map(data => <Section key={data[0]} section={data[1]} />) }
+      <hr/>
+      <AddSection addNewSection={addNewSection} />
+    </>
   );
 }
 

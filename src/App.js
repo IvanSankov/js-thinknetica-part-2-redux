@@ -5,6 +5,9 @@ import { Provider } from "react-redux";
 import Filter from "./components/Filter";
 import ContentList from "./components/ContentList";
 import Statistics from "./components/Statistics";
+import { initializeRequestSectionInfo } from './redux/actions/sections'
+
+store.dispatch(initializeRequestSectionInfo());
 
 export default class App extends React.Component {
   render() {

@@ -9,7 +9,7 @@ function mapStateToProps(state) {
     completedSubSectionNumber: 0,
   };
 
-  const sections = state.sections;
+  const sections = state.sections.present.entries;
 
   for (const [sectionId, section] of Object.entries(sections)) {
     props.sectionNumber++;

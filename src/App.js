@@ -5,22 +5,28 @@ import { Provider } from "react-redux";
 import Filter from "./components/Filter";
 import ContentList from "./components/ContentList";
 import Statistics from "./components/Statistics";
+import { initializeRequestSectionInfo } from './redux/actions/sections'
+
+store.dispatch(initializeRequestSectionInfo());
 
 export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
         <div className="row">
-          <div className="offset-3 col-6">
-            <Filter />
-
-            <hr/>
-
-            <Statistics />
-
-            <hr/>
-
+          <div className="col-6">
             <ContentList />
+          </div>
+          <div className="col-6">
+            <div className="row">
+              <div className="col-12">
+                <Filter />
+              <hr/>
+              </div>
+              <div className="col-12">
+                <Statistics />
+              </div>
+            </div>
           </div>
         </div>
       </Provider>

@@ -1,8 +1,8 @@
-import {ADD_NEW_SECTION} from "../../redux/reducers/content-list/actions";
+import { addNewSection } from "../../redux/slices/sections";
 import {connect} from "react-redux";
 import ContentList from "./ContentList";
 import {cloneDeep} from "lodash";
-
+import { generateUuid } from '../../utils/random';
 
 const filters = {
   SHOW_ALL: function (subsection) {
@@ -18,7 +18,7 @@ const filters = {
 
 function mapStateToProps(state) {
   const sections = {};
-  for (const [id, section] of Object.entries(state.sections)) {
+  for (const [id, section] of Object.entries(state.sections.present.entries)) {
     const newSection = cloneDeep(section);
     newSection.subsections = {};
 
@@ -32,18 +32,18 @@ function mapStateToProps(state) {
   }
 
   return {
+    isLoading: state.sections.present.isLoading,
+    error: state.sections.present.error,
     sections
   }
 }
 
 function mapDispatch2Props(dispatch) {
   return {
-    addNewSection: function (title) {
-      return dispatch({
-        type: ADD_NEW_SECTION,
-        title
-      });
-    }
+    addNewSection: (title) => dispatch(addNewSection({
+      title,
+      uuid: generateUuid(),
+    }))
   };
 }
 

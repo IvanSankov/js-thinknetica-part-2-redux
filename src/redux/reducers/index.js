@@ -1,9 +1,10 @@
 import { combineReducers } from "redux";
+import undoable, { distinctState } from 'redux-undo'
 
-import contentListReducer from "./content-list";
-import filterReducer from "./filter";
+import sections from "../slices/sections";
+import filter from "../slices/filter";
 
 export default combineReducers({
-  sections: contentListReducer,
-  filter: filterReducer
+  sections: undoable(sections),
+  filter
 });

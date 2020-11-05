@@ -2,7 +2,7 @@ import { addNewSection } from "../../redux/slices/sections";
 import {connect} from "react-redux";
 import ContentList from "./ContentList";
 import {cloneDeep} from "lodash";
-
+import { generateUuid } from '../../utils/random';
 
 const filters = {
   SHOW_ALL: function (subsection) {
@@ -41,7 +41,8 @@ function mapStateToProps(state) {
 function mapDispatch2Props(dispatch) {
   return {
     addNewSection: (title) => dispatch(addNewSection({
-      title
+      title,
+      uuid: generateUuid(),
     }))
   };
 }

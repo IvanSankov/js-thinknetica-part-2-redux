@@ -11,16 +11,12 @@ function isAllSubsectionCompleted(subsection) {
   return  Object.entries(subsection).every(data => data[1].completed);
 }
 
-function generateUuid() {
-  return Math.random().toString(36).substring(7);
-}
-
 const sectionsSlice = createSlice({
   name: 'sections',
   initialState,
   reducers: {
     addNewSubSection(state, action) {
-      const uuid = generateUuid();
+      const uuid = action.payload.uuid;
       const section = state.entries[action.payload.sectionId];
 
       section.subsections[uuid] = {
@@ -32,7 +28,7 @@ const sectionsSlice = createSlice({
       section.completed = false;
     },
     addNewSection(state, action) {
-      const uuid = generateUuid();
+      const uuid = action.payload.uuid;
 
       state.entries[uuid] = {
         id: uuid,
